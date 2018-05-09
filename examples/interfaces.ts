@@ -6,7 +6,6 @@ interface User {
 }
 
 interface Product {
-  id: number,
   sku: string,
   price: number,
   name?: string,

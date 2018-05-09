@@ -1,8 +1,13 @@
 const {
   resolveType,
   validateType,
-  aliases,
-  interfaces,
+  aliases: {
+    ID,
+  },
+  interfaces: {
+    User,
+    Product,
+  },
   enums,
 } = require('./build/runtype-test')
 
@@ -26,4 +31,48 @@ test('validateType', () => {
   }
 
   validateType('bar', 5, ['number'])
+})
+
+test('aliases', () => {
+  expect.assertions(3)
+
+  try { ID(false) }
+  catch (e) { expect(true).toBeTruthy() }
+
+  try { ID() }
+  catch (e) { expect(true).toBeTruthy() }
+
+  ID(123)
+  ID('123')
+
+  expect(true).toBeTruthy()
+})
+
+test('interfaces', () => {
+  expect.assertions(8)
+
+  try { User() }
+  catch (e) { expect(true).toBeTruthy() }
+
+  try { User({}) }
+  catch (e) { expect(true).toBeTruthy() }
+
+  try { User({ name: 5, age: '5' }) }
+  catch (e) { expect(true).toBeTruthy() }
+
+  User({ name: 'Jacob', age: 26 })
+  expect(true).toBeTruthy()
+
+  // Product
+  try { Product({ sku: null, price: 5 }) }
+  catch (e) { expect(true).toBeTruthy() }
+
+  Product({ sku: 'M-EXEC-1', price: 5 })
+  expect(true).toBeTruthy()
+
+  try { Product({ sku: 'M-EXEC-1', price: 5, name: true }) }
+  catch (e) { expect(true).toBeTruthy() }
+
+  Product({ sku: 'M-EXEC-1', price: 5, name: 'The Executive' })
+  expect(true).toBeTruthy()
 })
