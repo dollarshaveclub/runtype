@@ -17,6 +17,11 @@ interface Product {
   price: number,
   name?: string,
 }
+
+interface CartAddEvent {
+  event: 'cartAdd',
+  sku: string,
+}
 ```
 
 Transpile to Javascript
@@ -32,16 +37,19 @@ const {
   },
   interfaces: {
     Product,
+    CartAddEvent,
   }
 } = require('./example.js')
 
-ID(true) // Throws an error
-ID('123') // Fine
-ID(123) // Fine
+ID(true) // Error
+ID('123')
+ID(123)
 
-Product() // Throws an error
-Product({}) // Throws an error
-Product({ sku: true, price: 5 }) // Throws an error
-Product({ sku: 'M-EXEC-1', price: 5, name: 5 }) // Throws an error
-Product({ sku: 'M-EXEC-1', price: 5, name: 'The Executive' }) // Fine
+Product() // Error
+Product({}) // Error
+Product({ sku: true, price: 5 }) // Error
+Product({ sku: 'M-EXEC-1', price: 5, name: 5 }) // Error
+Product({ sku: 'M-EXEC-1', price: 5, name: 'The Executive' })
+
+CartAddEvent({ event: 'foobar', sku: 'M-EXEC-1' }) // Error: event value is not 'cartAdd'
 ```
