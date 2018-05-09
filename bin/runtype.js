@@ -20,7 +20,7 @@ const {
   output,
 } = program
 
-if (!globPattern || !output) {
+if (!globPattern) {
   program.outputHelp()
   process.exit(1)
 }
@@ -29,5 +29,12 @@ const files = glob.sync(globPattern)
 const data = parse(files)
 const javascript = render(data)
 
-mkdirp.sync(path.dirname(output))
-fs.writeFileSync(output, javascript)
+if (output) {
+  mkdirp.sync(path.dirname(output))
+}
+
+const outStream = output ?
+  fs.createWriteStream(output) :
+  process.stdout
+
+outStream.write(javascript)
