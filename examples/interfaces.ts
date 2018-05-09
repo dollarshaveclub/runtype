@@ -10,3 +10,8 @@ interface Product {
   price: number,
   name?: string,
 }
+
+interface CartAddEvent {
+  event?: 'cartAdd',
+  sku: string,
+}

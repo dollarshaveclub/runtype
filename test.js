@@ -1,6 +1,7 @@
 const {
   resolveType,
   validateType,
+  validateValue,
   aliases: {
     ID,
   },
@@ -8,6 +9,7 @@ const {
     User,
     Product,
     Address,
+    CartAddEvent,
   },
   enums,
 } = require('./build/runtype-test')
@@ -34,6 +36,15 @@ test('validateType', () => {
   validateType('bar', 5, ['number'])
 })
 
+test('validateValue', () => {
+  expect.assertions(1)
+
+  try { validateValue('foo', 5, [4]) }
+  catch (e) { expect(true).toBeTruthy() }
+
+  validateValue('foo', 'example', ['example'])
+})
+
 test('aliases', () => {
   expect.assertions(3)
 
@@ -49,8 +60,8 @@ test('aliases', () => {
   expect(true).toBeTruthy()
 })
 
-test('interfaces', () => {
-  expect.assertions(10)
+test('interfaces.basic', () => {
+  expect.assertions(4)
 
   try { User() }
   catch (e) { expect(true).toBeTruthy() }
@@ -63,7 +74,9 @@ test('interfaces', () => {
 
   User({ name: 'Jacob', age: 26 })
   expect(true).toBeTruthy()
+})
 
+test('interfaces.optionalParams', () => {
   // Product
   try { Product({ sku: null, price: 5 }) }
   catch (e) { expect(true).toBeTruthy() }
@@ -76,10 +89,26 @@ test('interfaces', () => {
 
   Product({ sku: 'M-EXEC-1', price: 5, name: 'The Executive' })
   expect(true).toBeTruthy()
+})
 
+test('multiple files', () => {
   try { Address({ line1: 'foo', zip: 90066, line2: true }) }
   catch (e) { expect(true).toBeTruthy() }
 
   Address({ line1: 'foo', zip: 90066, line2: 'Marina Del Rey' })
+  expect(true).toBeTruthy()
+})
+
+
+test('interfaces.literalValues', () => {
+  expect.assertions(3)
+
+  try { CartAddEvent({ event: 'foo', sku: 'M-EXEC-1' }) }
+  catch (e) { expect(true).toBeTruthy() }
+
+  CartAddEvent({ event: 'cartAdd', sku: 'M-EXEC-1' })
+  expect(true).toBeTruthy()
+
+  CartAddEvent({ sku: 'M-EXEC-1' })
   expect(true).toBeTruthy()
 })
