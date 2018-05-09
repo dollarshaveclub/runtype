@@ -13,11 +13,13 @@ const program = require('commander')
   .version(version)
   .option('-f, --files <glob>', 'A blob expression of Typescript files')
   .option('-o, --output <filename>', 'The filename to save the javascript data to')
+  .option('-d, --debug', 'Show additional debug output')
   .parse(process.argv)
 
 const {
   files: globPattern,
   output,
+  debug,
 } = program
 
 if (!globPattern) {
@@ -26,7 +28,7 @@ if (!globPattern) {
 }
 
 const files = glob.sync(globPattern)
-const data = parse({ files })
+const data = parse({ files, debug })
 const javascript = render(data)
 
 if (output) mkdirp.sync(path.dirname(output))

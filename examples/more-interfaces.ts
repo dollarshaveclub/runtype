@@ -1,5 +1,5 @@
 interface Address {
   line1: string,
-  line2?: number,
+  line2?: string,
   zip: number,
 }

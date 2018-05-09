@@ -7,6 +7,7 @@ const {
   interfaces: {
     User,
     Product,
+    Address,
   },
   enums,
 } = require('./build/runtype-test')
@@ -49,7 +50,7 @@ test('aliases', () => {
 })
 
 test('interfaces', () => {
-  expect.assertions(8)
+  expect.assertions(10)
 
   try { User() }
   catch (e) { expect(true).toBeTruthy() }
@@ -74,5 +75,11 @@ test('interfaces', () => {
   catch (e) { expect(true).toBeTruthy() }
 
   Product({ sku: 'M-EXEC-1', price: 5, name: 'The Executive' })
+  expect(true).toBeTruthy()
+
+  try { Address({ line1: 'foo', zip: 90066, line2: true }) }
+  catch (e) { expect(true).toBeTruthy() }
+
+  Address({ line1: 'foo', zip: 90066, line2: 'Marina Del Rey' })
   expect(true).toBeTruthy()
 })
