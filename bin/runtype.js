@@ -20,6 +20,11 @@ const {
   output,
 } = program
 
+if (!globPattern || !output) {
+  program.outputHelp()
+  process.exit(1)
+}
+
 const files = glob.sync(globPattern)
 const data = parse(files)
 const javascript = render(data)
