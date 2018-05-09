@@ -7,7 +7,7 @@
     "runtype": "./bin/runtype.js"
   },
   "scripts": {
-    "build-test": "./bin/runtype.js -f ./examples/*.ts -o ./build/runtype-test.js",
+    "build-test": "./bin/runtype.js -f ./examples/**/*.ts -o ./build/runtype-test.js",
     "test": "npm run build-test && ./node_modules/.bin/jest test.js"
   },
   "keywords": [],

@@ -5,7 +5,7 @@ const glob = require('glob')
 const mkdirp = require('mkdirp')
 const path = require('path')
 
-const parse = require('../lib/parse')
+const Parser = require('../lib/parser')
 const render = require('../lib/render')
 const { version } = require('../package')
 
@@ -17,7 +17,7 @@ const program = require('commander')
 
 const {
   files: globPattern,
-  output,
+  output: outputFolder,
 } = program
 
 if (!globPattern) {
@@ -26,15 +26,13 @@ if (!globPattern) {
 }
 
 const files = glob.sync(globPattern)
-const data = parse(files)
-const javascript = render(data)
+const { output } = new Parser({ files })
+const javascript = render(output)
 
-if (output) {
-  mkdirp.sync(path.dirname(output))
-}
+if (outputFolder) mkdirp.sync(path.dirname(outputFolder))
 
-const outStream = output ?
-  fs.createWriteStream(output) :
+const outStream = outputFolder ?
+  fs.createWriteStream(outputFolder) :
   process.stdout
 
 outStream.write(javascript)

@@ -1,6 +1,6 @@
 type ID = string | number
 
-interface User {
+export interface User {
   name: string,
   age: number,
 }
