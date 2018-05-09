@@ -3,7 +3,7 @@ Runtype converts Typescript type aliases, interfaces, and enums to Javascript th
 
 ## Installing
 ```bash
-npm i --save-dev runtype
+npm i --save-dev @dollarshaveclub/runtype
 ```
 
 ## Example
@@ -38,7 +38,7 @@ const {
   interfaces: {
     Product,
     CartAddEvent,
-  }
+  },
 } = require('./example.js')
 
 ID(true) // Error
