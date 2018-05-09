@@ -7,8 +7,7 @@ interface User {
 
 interface Product {
   id: number,
-  sku?: string,
-  price: number
+  sku: string,
+  price: number,
+  name?: string,
 }
-
-type mixed = object | number | string | boolean | symbol | undefined | null

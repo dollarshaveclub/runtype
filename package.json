@@ -1,15 +1,24 @@
 {
-  "name": "ts-runtime-interface",
+  "name": "runtype",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "bin": {
+    "runtype": "./bin/runtype.js"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build-test": "./bin/runtype.js -f ./examples/*.ts -o ./build/runtype-test.js",
+    "test": "npm run build-test && ./node_modules/.bin/jest test.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "commander": "^2.15.1",
+    "glob": "^7.1.2",
+    "jest": "^22.4.3",
+    "mkdirp": "^0.5.1",
+    "prettier": "^1.12.1",
     "typescript": "^2.8.3"
   }
 }
