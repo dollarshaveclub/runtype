@@ -10,11 +10,11 @@ npm i --save-dev runtype
 Define your interfaces
 ```typescript
 // example.ts
-type Foo = boolean | null
+type ID = string | number
 
 interface Product {
-  id: number | string,
   sku: string,
+  price: number,
   name?: string,
 }
 ```
@@ -26,15 +26,22 @@ runtype -f example.ts -o example.js
 
 Interact with JS
 ```javascript
-const { aliases, interfaces } = require('./example.js')
+const {
+  aliases: {
+    ID,
+  },
+  interfaces: {
+    Product,
+  }
+} = require('./example.js')
 
-aliases.Foo('Hello') // Throws an error
-aliases.Foo(null) // Fine
-aliases.Foo(false) // Fine
+ID(true) // Throws an error
+ID('123') // Fine
+ID(123) // Fine
 
-interfaces.User() // Throws an error
-interfaces.User({}) // Throws an error
-interfaces.User({ id: 5, sku: true }) // Throws an error
-interfaces.User({ id: 5, sku: 'M-EXEC-1', name: 5 }) // Throws an error
-interfaces.User({ id: 5, sku: 'M-EXEC-1', name: 'The Executive' }) // Fine
+Product() // Throws an error
+Product({}) // Throws an error
+Product({ sku: true, price: 5 }) // Throws an error
+Product({ sku: 'M-EXEC-1', price: 5, name: 5 }) // Throws an error
+Product({ sku: 'M-EXEC-1', price: 5, name: 'The Executive' }) // Fine
 ```
