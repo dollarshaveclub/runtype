@@ -20,7 +20,7 @@
 
 ### Installing
 ```bash
-npm i --save-dev @dollarshaveclub/runtype
+npm i -g @dollarshaveclub/runtype # Install globally or --save-dev
 ```
 
 ## Transpiling
