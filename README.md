@@ -7,7 +7,7 @@
 <p align="center">
   [![CircleCI](https://circleci.com/gh/dollarshaveclub/runtype/tree/master.svg?style=svg&circle-token=ce363f7d5591f10e1cd224b419913d827adb7ee1)](https://circleci.com/gh/dollarshaveclub/runtype/tree/master)
   [![NPM Version](https://badge.fury.io/js/%40dollarshaveclub%2Fruntype.svg)](https://www.npmjs.com/package/@dollarshaveclub/runtype)
-  [![Codecov](https://codecov.io/gh/dollarshaveclub/runtype/branch/master/graph/badge.svg?token=kuFDT8fFIh)](https://codecov.io/gh/dollarshaveclub/runtype)
+  [![codecov](https://codecov.io/gh/dollarshaveclub/runtype/branch/master/graph/badge.svg?token=kuFDT8fFIh)](https://codecov.io/gh/dollarshaveclub/runtype)
 </p>
 
 ***
