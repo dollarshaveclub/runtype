@@ -38,13 +38,13 @@ jobs:
       - checkout
       - *restore_cache
       - run: npm test
+      - npm: npx codecov
 
   publish:
     <<: *defaults
     steps:
       - checkout
       - *restore_cache
-      - npm: npx codecov -t $CODECOV_TOKEN
       - run: node scripts/check-package-version.js
       # - run: npm publish
 
