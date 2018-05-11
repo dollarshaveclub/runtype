@@ -9,6 +9,7 @@ const {
     Product,
     Address,
     CartAddEvent,
+    CartViewEvent,
   },
 } = require('./build/runtype-test')
 
@@ -65,6 +66,22 @@ test('interfaces.literalValues', () => {
     { fn: CartAddEvent, value: { event: 'foo', sku: 'M-EXEC-1' }, expectFailure: true },
     { fn: CartAddEvent, value: { event: 'cartAdd', sku: 'M-EXEC-1' } },
     { fn: CartAddEvent, value: { sku: 'M-EXEC-1' } },
+    { fn: CartAddEvent, value: { sku: 'M-EXEC-1', items: ['a', 'b', 'c'] } },
+  ]
+  expect.assertions(cases.length)
+  runCases(cases)
+})
+
+test('interfaces.arrays', () => {
+  const product = {
+    id: '123',
+    sku: 'foo',
+    price: 5,
+  }
+  const cases = [
+    { fn: CartAddEvent, value: { sku: 'M-EXEC-1', items: ['a', 'b', 'c'] } },
+    { fn: CartAddEvent, value: { sku: 'M-EXEC-1', items: ['a', 3, 'c'] }, expectFailure: true },
+    { fn: CartViewEvent, value: { sku: 'M-EXEC-1', items: [product, product, product] } },
   ]
   expect.assertions(cases.length)
   runCases(cases)

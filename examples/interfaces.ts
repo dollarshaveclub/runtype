@@ -15,4 +15,9 @@ interface Product {
 interface CartAddEvent {
   event?: 'cartAdd',
   sku: string,
+  items?: string[]
+}
+
+interface CartViewEvent {
+  items: Product[]
 }
