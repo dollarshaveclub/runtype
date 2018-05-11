@@ -1,5 +1,20 @@
-# Runtype
-Runtype converts Typescript type aliases, interfaces, and enums to Javascript that can be used during runtime
+<p align="center">
+
+</p>
+<hr />
+<p align="center">
+  [![CircleCI](https://circleci.com/gh/dollarshaveclub/runtype/tree/master.svg?style=svg&circle-token=ce363f7d5591f10e1cd224b419913d827adb7ee1)](https://circleci.com/gh/dollarshaveclub/runtype/tree/master)
+  <a href="https://www.npmjs.com/package/@dollarshaveclub/runtype">
+    <img alt="npm version" src="https://badge.fury.io/js/%40dollarshaveclub%2Fruntype.svg" />
+  </a>
+  <a href="https://codecov.io/gh/dollarshaveclub/runtype">
+    <img alt="codecov" src="https://codecov.io/gh/dollarshaveclub/runtype/branch/master/graph/badge.svg?token=kuFDT8fFIh" />
+  </a>
+</p>
+
+***
+
+> Runtype converts Typescript type aliases, interfaces, and enums to Javascript that can be used during runtime
 
 ### Features
 * Uses Typescript Compiler

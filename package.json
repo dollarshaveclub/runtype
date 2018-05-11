@@ -1,6 +1,6 @@
 {
   "name": "@dollarshaveclub/runtype",
-  "version": "1.0.0",
+  "version": "1.0.0-rc.1",
   "description": "Runtype converts Typescript type aliases, interfaces, and enums to Javascript that can be used during runtime",
   "main": "index.js",
   "bin": {
@@ -10,9 +10,20 @@
     "debug-test": "./bin/runtype.js -f ./examples/**/*.ts --debug",
     "eslint": "eslint . --cache --cache-location node_modules/.cache/eslint --ignore-path .gitignore",
     "build-test": "./bin/runtype.js -f ./examples/**/*.ts -o ./build/runtype-test.js",
-    "test": "npm run build-test && ./node_modules/.bin/jest test.js"
+    "test": "npm run build-test && ./node_modules/.bin/jest test.js",
+    "prepublishOnly": "npm test",
+    "postpublish": "git tag $npm_package_version && git push origin --tags"
   },
-  "keywords": [],
+  "keywords": [
+    "typescript",
+    "transpile",
+    "runtime",
+    "runtype",
+    "validate",
+    "validations",
+    "interfaces",
+    "aliases"
+  ],
   "author": "Jacob Kelley <jacob.kelley@dollarshaveclub.com>",
   "license": "MIT",
   "devDependencies": {
