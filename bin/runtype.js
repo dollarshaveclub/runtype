@@ -29,13 +29,18 @@ if (!globPattern) {
 
 const files = glob.sync(globPattern)
 const data = parse({ files, debug })
-// console.log(JSON.stringify(data, null, 2))
+
+if (debug) {
+  console.log(JSON.stringify(data, null, 2))
+  return process.exit(0)
+}
+
 const javascript = render(data)
 
 if (output) mkdirp.sync(path.dirname(output))
 
-const outStream = output ?
-  fs.createWriteStream(output) :
-  process.stdout
+const outStream = output
+  ? fs.createWriteStream(output)
+  : process.stdout
 
 outStream.write(javascript)

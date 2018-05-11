@@ -1,7 +1,6 @@
 const {
   resolveType,
-  validateType,
-  validateValue,
+  validate,
   aliases: {
     ID,
   },
@@ -11,7 +10,6 @@ const {
     Address,
     CartAddEvent,
   },
-  enums,
 } = require('./build/runtype-test')
 
 test('resolveType', () => {
@@ -24,91 +22,82 @@ test('resolveType', () => {
   expect(resolveType(false)).toBe('boolean')
 })
 
-test('validateType', () => {
-  expect.assertions(1)
-
-  try {
-    validateType('foo', 5, ['string'])
-  } catch (e) {
-    expect(true).toBeTruthy()
-  }
-
-  validateType('bar', 5, ['number'])
-})
-
-test('validateValue', () => {
-  expect.assertions(1)
-
-  try { validateValue('foo', 5, [4]) }
-  catch (e) { expect(true).toBeTruthy() }
-
-  validateValue('foo', 'example', ['example'])
+test('validate', () => {
+  expect(validate('ID', 5)).toBeTruthy()
+  expect(validate('ID', [])).toBeFalsy()
 })
 
 test('aliases', () => {
-  expect.assertions(3)
-
-  try { ID(false) }
-  catch (e) { expect(true).toBeTruthy() }
-
-  try { ID() }
-  catch (e) { expect(true).toBeTruthy() }
-
-  ID(123)
-  ID('123')
-
-  expect(true).toBeTruthy()
+  const cases = [
+    { fn: ID, value: undefined, expectFailure: true },
+    { fn: ID, value: false, expectFailure: true },
+    { fn: ID, value: 123 },
+    { fn: ID, value: '123' },
+  ]
+  expect.assertions(cases.length)
+  runCases(cases)
 })
 
 test('interfaces.basic', () => {
-  expect.assertions(4)
-
-  try { User() }
-  catch (e) { expect(true).toBeTruthy() }
-
-  try { User({}) }
-  catch (e) { expect(true).toBeTruthy() }
-
-  try { User({ name: 5, age: '5' }) }
-  catch (e) { expect(true).toBeTruthy() }
-
-  User({ name: 'Jacob', age: 26 })
-  expect(true).toBeTruthy()
+  const cases = [
+    { fn: User, value: undefined, expectFailure: true },
+    { fn: User, value: {}, expectFailure: true },
+    { fn: User, value: { name: 5, age: '5' }, expectFailure: true },
+    { fn: User, value: { name: 'Jacob', age: 26 } },
+  ]
+  expect.assertions(cases.length)
+  runCases(cases)
 })
 
 test('interfaces.optionalParams', () => {
-  // Product
-  try { Product({ sku: null, price: 5 }) }
-  catch (e) { expect(true).toBeTruthy() }
+  const cases = [
+    { fn: Product, value: { sku: null, price: 5 }, expectFailure: true },
+    { fn: Product, value: { sku: 'M-EXEC-1', price: 5 } },
+    { fn: Product, value: { sku: 'M-EXEC-1', price: 5, name: true }, expectFailure: true },
+    { fn: Product, value: { sku: 'M-EXEC-1', price: 5, name: 'The Executive' } },
+  ]
+  expect.assertions(cases.length)
+  runCases(cases)
+})
 
-  Product({ sku: 'M-EXEC-1', price: 5 })
-  expect(true).toBeTruthy()
+test('interfaces.literalValues', () => {
+  const cases = [
+    { fn: CartAddEvent, value: { event: 'foo', sku: 'M-EXEC-1' }, expectFailure: true },
+    { fn: CartAddEvent, value: { event: 'cartAdd', sku: 'M-EXEC-1' } },
+    { fn: CartAddEvent, value: { sku: 'M-EXEC-1' } },
+  ]
+  expect.assertions(cases.length)
+  runCases(cases)
+})
 
-  try { Product({ sku: 'M-EXEC-1', price: 5, name: true }) }
-  catch (e) { expect(true).toBeTruthy() }
-
-  Product({ sku: 'M-EXEC-1', price: 5, name: 'The Executive' })
-  expect(true).toBeTruthy()
+test('interfaces.references', () => {
+  const cases = [
+    { fn: Product, value: { sku: 'M-EXEC-1', price: 5, name: 'The Executive', id: 'foo' } },
+  ]
+  expect.assertions(cases.length)
+  runCases(cases)
 })
 
 test('multiple files', () => {
-  try { Address({ line1: 'foo', zip: 90066, line2: true }) }
-  catch (e) { expect(true).toBeTruthy() }
-
-  Address({ line1: 'foo', zip: 90066, line2: 'Marina Del Rey' })
-  expect(true).toBeTruthy()
+  const cases = [
+    { fn: Address, value: { line1: 'foo', zip: 90066, line2: true }, expectFailure: true },
+    { fn: Address, value: { line1: 'foo', zip: 90066, line2: 'Marina Del Rey' } },
+  ]
+  expect.assertions(cases.length)
+  runCases(cases)
 })
 
-
-test('interfaces.literalValues', () => {
-  expect.assertions(3)
-
-  try { CartAddEvent({ event: 'foo', sku: 'M-EXEC-1' }) }
-  catch (e) { expect(true).toBeTruthy() }
-
-  CartAddEvent({ event: 'cartAdd', sku: 'M-EXEC-1' })
-  expect(true).toBeTruthy()
-
-  CartAddEvent({ sku: 'M-EXEC-1' })
-  expect(true).toBeTruthy()
-})
+function runCases (cases) {
+  cases.forEach(({ fn, value, expectFailure }) => {
+    if (expectFailure) {
+      try {
+        fn(value)
+      } catch (e) {
+        expect(true).toBeTruthy()
+      }
+    } else {
+      fn(value)
+      expect(true).toBeTruthy()
+    }
+  })
+}

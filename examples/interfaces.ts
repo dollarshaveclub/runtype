@@ -6,6 +6,7 @@ export interface User {
 }
 
 interface Product {
+  id?: ID,
   sku: string,
   price: number,
   name?: string,
