@@ -45,8 +45,13 @@ jobs:
     steps:
       - checkout
       - *restore_cache
+      - run: npm install
+      - run:
+          name: NPM Access
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_WRITE_TOKEN" >> ~/.npmrc
+      - run: git config --global user.email "circle@dontemailme.com" && git config user.name "CircleCI"
       - run: node scripts/check-package-version.js
-      # - run: npm publish
+      - run: npm publish
 
 workflows:
   version: 2

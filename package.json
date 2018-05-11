@@ -1,6 +1,6 @@
 {
   "name": "@dollarshaveclub/runtype",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0-rc.2",
   "description": "Runtype converts Typescript type aliases, interfaces, and enums to Javascript that can be used during runtime",
   "main": "index.js",
   "bin": {
