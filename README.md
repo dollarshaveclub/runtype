@@ -3,9 +3,9 @@
 ***
 
 <p align="center">
-  [![CircleCI](https://circleci.com/gh/dollarshaveclub/runtype/tree/master.svg?style=svg&circle-token=ce363f7d5591f10e1cd224b419913d827adb7ee1)](https://circleci.com/gh/dollarshaveclub/runtype/tree/master)
-  [![NPM Version](https://badge.fury.io/js/%40dollarshaveclub%2Fruntype.svg)](https://www.npmjs.com/package/@dollarshaveclub/runtype)
-  [![codecov](https://codecov.io/gh/dollarshaveclub/runtype/branch/master/graph/badge.svg?token=kuFDT8fFIh)](https://codecov.io/gh/dollarshaveclub/runtype)
+  <a href="https://circleci.com/gh/dollarshaveclub/runtype/tree/master"><img src="https://circleci.com/gh/dollarshaveclub/runtype/tree/master.svg?style=svg&circle-token=ce363f7d5591f10e1cd224b419913d827adb7ee1" alt="CircleCI"></a>
+  <a href="https://www.npmjs.com/package/@dollarshaveclub/runtype"><img src="https://badge.fury.io/js/%40dollarshaveclub%2Fruntype.svg" alt="NPM Version"></a>
+  <a href="https://codecov.io/gh/dollarshaveclub/runtype"><img src="https://codecov.io/gh/dollarshaveclub/runtype/branch/master/graph/badge.svg?token=kuFDT8fFIh" alt="codecov"></a>
 </p>
 
 ***
