@@ -38,7 +38,7 @@ jobs:
       - checkout
       - *restore_cache
       - run: npm test
-      - npm: npx codecov
+      - run: npx codecov
 
   publish:
     <<: *defaults
