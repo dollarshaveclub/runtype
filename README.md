@@ -1,55 +1,112 @@
 # Runtype
 Runtype converts Typescript type aliases, interfaces, and enums to Javascript that can be used during runtime
 
-## Installing
+### Features
+* Uses Typescript Compiler
+* Recursive validation during runtime
+* Well Tested
+* Many [supported types](#support)
+
+### Installing
 ```bash
 npm i --save-dev @dollarshaveclub/runtype
 ```
 
-## Example
-Define your interfaces
-```typescript
-// example.ts
-type ID = string | number
+## Transpiling
+First things first, you need to have some typescript that you'd like to transpile to javascript.
+### Command Line
+```bash
+# STDIN / STDOUT
+$ echo 'type ID = string | number' | runtype >> ./output.js
 
+# Input from disk + STDOUT
+$ echo runtype -f './files/**/*.ts' >> ./output.js
+
+# Input from / Output to disk
+$ echo runtype -f './files/**/*.ts' -o ./output.js
+
+# Debug
+echo 'type ID = string | number' | runtype -d
+```
+
+### Node API
+```javascript
+import { parse, render } from '@dollarshaveclub/runtype'
+import fs from 'fs'
+
+const data = parse(['./files/my-types.ts'])
+console.log(data.aliases.ID)
+
+fs.writeFileSync(render(data), './output.js')
+```
+
+## Usage
+Once you've transpiled your typescript, import it in your project to be compiled into your apps build.
+
+The transpiled API allows you to validate your data with the types and interfaces defined in your typescript files. They are functions that will throw errors if the
+data provided is invalid.
+```javascript
+import {
+  aliases: { ID },
+  interfaces: { Product },
+}  from './output.js'
+
+ID(123)
+ID('123')
+ID(true) // Throws an error
+
+Product({ sku: 'M-EXEC-1', price: 5.00 }) // etc
+```
+
+Additional APIs are available to work with.
+```javascript
+import {
+  runtypes, // All of your types/interfaces organized neatly
+  validate, // A function that validates data, returns true or error messages
+  resolveType, // A function that converts a value into a type
+  aliases, // An object containing all of your type aliases
+  interfaces, // An object containing all of your interfaces
+} from './output.js'
+
+console.log(runtypes) // neat
+
+validate('ID', 5) // true
+validate('ID', ['test']) // ['ID value is invalid']
+
+resolveType(5) // "number"
+resolveType([]) // "array", etc
+
+aliases.ID(true) // throws an error
+interfaces.Product({ /* etc */ }})
+```
+
+***
+
+## Support
+The following features are supported by Runtype. Contributions are always welcome!
+### Aliases
+```typescript
+type ID = number
+```
+
+### Union Types
+```typescript
+type mixed = string | number | boolean | object | symbol | null | undefined
+```
+
+### Interfaces
+```typescript
 interface Product {
+  id: string | number, // Union Types
   sku: string,
   price: number,
-  name?: string,
+  type: 'product', // Literal Values
+  description?: string, // Optional Properties
+  parent: Product, // Reference Types
+  childProducts: Product[], // Reference Array Types
+  benefits: string[] // Primitive Array Types
 }
-
-interface CartAddEvent {
-  event: 'cartAdd',
-  sku: string,
-}
 ```
 
-Transpile to Javascript
-```bash
-runtype -f example.ts -o example.js
-```
-
-Interact with JS
-```javascript
-const {
-  aliases: {
-    ID,
-  },
-  interfaces: {
-    Product,
-    CartAddEvent,
-  },
-} = require('./example.js')
-
-ID(true) // Error
-ID('123')
-ID(123)
-
-Product() // Error
-Product({}) // Error
-Product({ sku: true, price: 5 }) // Error
-Product({ sku: 'M-EXEC-1', price: 5, name: 5 }) // Error
-Product({ sku: 'M-EXEC-1', price: 5, name: 'The Executive' })
-
-CartAddEvent({ event: 'foobar', sku: 'M-EXEC-1' }) // Error: event value is not 'cartAdd'
-```
+## License
+[MIT](LICENSE)
