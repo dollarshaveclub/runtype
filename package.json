@@ -17,6 +17,7 @@
   "license": "MIT",
   "devDependencies": {
     "babel-eslint": "^8.2.2",
+    "codecov": "^3.0.2",
     "commander": "^2.15.1",
     "eslint": "^4.14.0",
     "eslint-config-dollarshaveclub": "^3.1.0",
@@ -25,5 +26,18 @@
     "mkdirp": "^0.5.1",
     "prettier": "^1.12.1",
     "typescript": "^2.8.3"
+  },
+
+  "jest": {
+    "collectCoverage": true,
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "transform": {
+      "^.+\\.(js|jsx)$": "<rootDir>/node_modules/babel-jest"
+    },
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
+    ]
   }
 }
