@@ -1,4 +1,4 @@
-enum Carts {
+export enum Carts {
   Standalone = 'standalone',
   Scheduled = 'scheduled',
   Gift = 'gift',

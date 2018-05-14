@@ -14,7 +14,7 @@ const {
   },
   enums: {
     Carts,
-  }
+  },
 } = require('./build/runtype-test')
 
 test('resolveType', () => {
