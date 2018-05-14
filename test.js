@@ -10,7 +10,11 @@ const {
     Address,
     CartAddEvent,
     CartViewEvent,
+    CartGift,
   },
+  enums: {
+    Carts,
+  }
 } = require('./build/runtype-test')
 
 test('resolveType', () => {
@@ -26,6 +30,12 @@ test('resolveType', () => {
 test('validate', () => {
   expect(validate('ID', 5)).toBeTruthy()
   expect(validate('ID', [])).toBeFalsy()
+})
+
+test('enums', () => {
+  CartGift({
+    cart: Carts.Gift,
+  })
 })
 
 test('aliases', () => {

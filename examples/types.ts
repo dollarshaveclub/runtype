@@ -1,3 +1,5 @@
+// import { Carts: { Gift } } from './enums'
+
 type ID = string | number
 
 export interface User {
@@ -20,4 +22,8 @@ interface CartAddEvent {
 
 interface CartViewEvent {
   items: Product[]
+}
+
+interface CartGift {
+  cart: Gift,
 }
