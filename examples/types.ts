@@ -1,3 +1,5 @@
+import { Carts, PaymentMethods } from './enums'
+
 type ID = string | number
 
 export interface User {
@@ -20,4 +22,16 @@ interface CartAddEvent {
 
 interface CartViewEvent {
   items: Product[]
+}
+
+interface Cart {
+  gift?: Carts.Gift,
+  scheduled?: Carts.Scheduled,
+  standalone?: Carts.Standalone,
+}
+
+interface Transaction {
+  card?: PaymentMethods.Card,
+  credits?: PaymentMethods.Credits,
+  paypal?: PaymentMethods.PayPal,
 }
