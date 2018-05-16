@@ -10,10 +10,12 @@ const {
     Address,
     CartAddEvent,
     CartViewEvent,
-    CartGift,
+    Cart,
+    Transaction,
   },
   enums: {
     Carts,
+    PaymentMethods,
   },
 } = require('./build/runtype-test')
 
@@ -33,9 +35,19 @@ test('validate', () => {
 })
 
 test('enums', () => {
-  CartGift({
-    cart: Carts.Gift,
-  })
+  const cases = [
+    { fn: Cart, value: { gift: Carts.Gift } },
+    { fn: Cart, value: { scheduled: Carts.Scheduled } },
+    { fn: Cart, value: { standalone: Carts.Standalone } },
+    { fn: Cart, value: { standalone: Carts.Scheduled }, expectFailure: true },
+
+    { fn: Transaction, value: { credits: PaymentMethods.Credits } },
+    { fn: Transaction, value: { card: PaymentMethods.Card } },
+    { fn: Transaction, value: { paypal: PaymentMethods.PayPal } },
+    { fn: Transaction, value: { card: PaymentMethods.Credits }, expectFailure: true },
+  ]
+  expect.assertions(cases.length)
+  runCases(cases)
 })
 
 test('aliases', () => {
@@ -77,6 +89,7 @@ test('interfaces.literalValues', () => {
     { fn: CartAddEvent, value: { event: 'cartAdd', sku: 'M-EXEC-1' } },
     { fn: CartAddEvent, value: { sku: 'M-EXEC-1' } },
     { fn: CartAddEvent, value: { sku: 'M-EXEC-1', items: ['a', 'b', 'c'] } },
+    { fn: CartAddEvent, value: { sku: 'M-EXEC-1', items: 'foo' }, expectFailure: true },
   ]
   expect.assertions(cases.length)
   runCases(cases)
@@ -92,6 +105,7 @@ test('interfaces.arrays', () => {
     { fn: CartAddEvent, value: { sku: 'M-EXEC-1', items: ['a', 'b', 'c'] } },
     { fn: CartAddEvent, value: { sku: 'M-EXEC-1', items: ['a', 3, 'c'] }, expectFailure: true },
     { fn: CartViewEvent, value: { sku: 'M-EXEC-1', items: [product, product, product] } },
+    { fn: CartViewEvent, value: { sku: 'M-EXEC-1', items: ['foo', product, product] }, expectFailure: true },
   ]
   expect.assertions(cases.length)
   runCases(cases)
@@ -115,7 +129,7 @@ test('multiple files', () => {
 })
 
 function runCases (cases) {
-  cases.forEach(({ fn, value, expectFailure }) => {
+  cases.forEach(({ fn, value, expectFailure }, i) => {
     if (expectFailure) {
       try {
         fn(value)

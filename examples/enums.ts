@@ -4,7 +4,7 @@ export enum Carts {
   Gift = 'gift',
 }
 
-enum PaymentMethods {
+export enum PaymentMethods {
   Credits = 'credits',
   Card = 'card',
   PayPal = 'paypal',
