@@ -3,15 +3,13 @@
 ***
 
 <p align="center">
-
   <a href="#features">Features</a> &nbsp;
   <a href="#installing">Installing</a> &nbsp;
   <a href="#usage">Usage</a> &nbsp;
   <a href="#support">Support</a> &nbsp;
   <a href="#license">License</a>
-
-  <br /><br />
-
+</p>
+<p align="center">
   <a href="https://circleci.com/gh/dollarshaveclub/runtype/tree/master"><img src="https://circleci.com/gh/dollarshaveclub/runtype/tree/master.svg?style=svg&circle-token=ce363f7d5591f10e1cd224b419913d827adb7ee1" alt="CircleCI"></a>
   <a href="https://www.npmjs.com/package/@dollarshaveclub/runtype"><img src="https://badge.fury.io/js/%40dollarshaveclub%2Fruntype.svg" alt="NPM Version"></a>
   <a href="https://codecov.io/gh/dollarshaveclub/runtype"><img src="https://codecov.io/gh/dollarshaveclub/runtype/branch/master/graph/badge.svg?token=kuFDT8fFIh" alt="codecov"></a>
@@ -21,13 +19,13 @@
 
 > Runtype converts Typescript type aliases, interfaces, and enums to Javascript that can be used during runtime
 
-### Features
+## Features
 * Uses Typescript Compiler
 * Recursive validation during runtime
 * Well Tested
 * Many [supported types](#support)
 
-### Installing
+## Installing
 ```bash
 npm i -g @dollarshaveclub/runtype # Install globally or --save-dev
 ```
@@ -135,7 +133,11 @@ interface Product {
 
 ### Enums
 ```typescript
-
+enum PaymentMethods {
+  Credits = 'credits',
+  Card = 'card',
+  PayPal = 'paypal',
+}
 ```
 
 ## License

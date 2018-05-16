@@ -1,4 +1,4 @@
-import { Carts: { Gift } } from './enums'
+import { Carts } from './enums'
 
 type ID = string | number
 
@@ -25,5 +25,5 @@ interface CartViewEvent {
 }
 
 interface CartGift {
-  cart: Gift,
+  cart: Carts.Gift,
 }
